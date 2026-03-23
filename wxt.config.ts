@@ -11,6 +11,12 @@ export default defineConfig({
     name: 'Nuxt Data Scraper',
     description: 'Detect and explore __NUXT_DATA__ on any Nuxt 3 page',
     permissions: ['activeTab', 'tabs', 'storage', 'scripting'],
+    browser_specific_settings: {
+      gecko: {
+        id: 'nuxt-data-scraper@wxt',
+        strict_min_version: '109.0',
+      },
+    },
   },
   webExt: {
     chromiumArgs: ['--user-data-dir=./.chrome-profile'],
