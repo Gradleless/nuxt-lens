@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <!-- Icon background -->
+  <rect width="128" height="128" rx="28.16" fill="#1a2e24"/>
+  <!-- Lens outer glow ring -->
+  <circle cx="64.0" cy="61.44" r="35.84" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="9.6"/>
+  <!-- Lens ring -->
+  <circle cx="64.0" cy="61.44" r="35.84" fill="none" stroke="#3ecf7a" stroke-width="5.376"/>
+  <!-- Pupil -->
+  <circle cx="64.0" cy="61.44" r="14.72" fill="#3ecf7a"/>
+  <!-- Inner dot -->
+  <circle cx="64.0" cy="61.44" r="6.144" fill="#1a2e24"/>
+  <!-- Shine -->
+  <circle cx="52.480000000000004" cy="49.92" r="6.4" fill="rgba(255,255,255,0.28)"/>
+  <!-- Handle -->
+  <line x1="89.088" y1="86.52799999999999" x2="111.3088" y2="108.7488" stroke="#3ecf7a" stroke-width="5.888" stroke-linecap="round"/>
+</svg>
