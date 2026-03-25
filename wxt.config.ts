@@ -8,8 +8,9 @@ export default defineConfig({
     plugins: [tailwindcss()],
   }),
   manifest: {
-    name: 'Nuxt Data Scraper',
-    description: 'Detect and explore __NUXT_DATA__ on any Nuxt 3 page',
+    name: '__MSG_extensionName__',
+    description: '__MSG_extensionDescription__',
+    default_locale: 'en',
     permissions: ['activeTab', 'tabs', 'storage', 'scripting'],
     browser_specific_settings: {
       gecko: {
