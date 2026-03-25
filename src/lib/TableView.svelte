@@ -1,4 +1,7 @@
 <script lang="ts">
+  import { t } from './i18n'
+
+
   let { resolved }: { resolved: unknown[] } = $props()
 
   interface ArrayInfo {
@@ -71,7 +74,7 @@
 </script>
 
 {#if arrays.length === 0}
-  <p class="py-8 text-center text-xs text-zinc-600">No array of objects found in the payload</p>
+  <p class="py-8 text-center text-xs text-zinc-600">{t('tableview_empty')}</p>
 {:else}
   <div class="flex flex-col gap-3">
     <div class="flex items-center gap-2">
@@ -81,19 +84,19 @@
           bind:value={selectedIndex}
         >
           {#each arrays as arr, i}
-            <option value={i}>{arr.path} ({arr.data.length} rows)</option>
+            <option value={i}>{arr.path} ({t('tableview_rows', String(arr.data.length))})</option>
           {/each}
         </select>
       {:else if current}
         <span class="flex-1 font-mono text-[11px] text-zinc-500">
-          {current.path} · {current.data.length} rows · {current.columns.length} cols
+          {current.path} · {t('tableview_rows', String(current.data.length))} · {t('tableview_cols', String(current.columns.length))}
         </span>
       {/if}
       <button
         class="shrink-0 rounded px-2.5 py-1 text-[11px] text-zinc-500 transition-colors hover:text-[#00DC82]"
         onclick={copyCSV}
       >
-        {csvCopied ? '✓ copied' : 'Copy CSV'}
+        {csvCopied ? t('action_copied') : t('tableview_copy_csv')}
       </button>
     </div>
 

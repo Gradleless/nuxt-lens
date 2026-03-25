@@ -4,6 +4,7 @@
   import TreeNode from '../../lib/TreeNode.svelte'
   import ExportPanel from '../../lib/ExportPanel.svelte'
   import TableView from '../../lib/TableView.svelte'
+  import { t } from '../../lib/i18n'
 
   type Tab = 'explorer' | 'export' | 'stores' | 'tags' | 'endpoints'
   type ExplorerView = 'tree' | 'table' | 'raw'
@@ -15,12 +16,12 @@
   }
 
   const KIND_LABEL: Record<EndpointKind, string> = {
-    api: 'API Routes',
-    image: 'Images',
-    document: 'Documents',
-    external: 'External URLs',
-    page: 'Page Routes',
-    other: 'Other',
+    api: t('kind_api'),
+    image: t('kind_image'),
+    document: t('kind_document'),
+    external: t('kind_external'),
+    page: t('kind_page'),
+    other: t('kind_other'),
   }
 
   const KIND_ORDER: EndpointKind[] = ['api', 'page', 'external', 'image', 'document', 'other']
@@ -331,11 +332,11 @@
   }
 
   const TABS: { id: Tab; label: string }[] = [
-    { id: 'explorer', label: 'Explorer' },
-    { id: 'export', label: 'Export' },
-    { id: 'stores', label: 'Stores' },
-    { id: 'tags', label: 'Tags' },
-    { id: 'endpoints', label: 'Endpoints' },
+    { id: 'explorer', label: t('tab_explorer') },
+    { id: 'export', label: t('tab_export') },
+    { id: 'stores', label: t('tab_stores') },
+    { id: 'tags', label: t('tab_tags') },
+    { id: 'endpoints', label: t('tab_endpoints') },
   ]
 
   let showInternalTags = $state(false)
@@ -359,16 +360,16 @@
       <path d="M12 2L2 20h20L12 2z" fill="#00DC82" fill-opacity="0.15" stroke="#00DC82" stroke-width="1.5" stroke-linejoin="round"/>
       <path d="M9 17l3-6 3 6" stroke="#00DC82" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
-    <span class="text-sm font-semibold tracking-tight text-zinc-100">Nuxt Data Scraper</span>
+    <span class="text-sm font-semibold tracking-tight text-zinc-100">{t('extensionName')}</span>
 
     {#if !loading}
       {#if detected}
         <span class="ml-auto rounded-full border border-[#00DC82]/25 bg-[#00DC82]/10 px-2 py-0.5 text-[11px] font-medium text-[#00DC82]">
-          detected
+          {t('status_detected')}
         </span>
       {:else}
         <span class="ml-auto rounded-full border border-zinc-700 bg-zinc-800/50 px-2 py-0.5 text-[11px] text-zinc-500">
-          not detected
+          {t('status_not_detected')}
         </span>
       {/if}
     {/if}
@@ -386,7 +387,7 @@
         <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
         <path d="M11 8v3m0 3h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
       </svg>
-      <p class="text-sm">No <code class="text-zinc-500">__NUXT_DATA__</code> found on this page</p>
+      <p class="text-sm">{t('no_data_found')}</p>
     </div>
 
   {:else}
@@ -409,7 +410,7 @@
           class="rounded px-2 py-1 text-[11px] text-zinc-500 transition-colors hover:text-[#00DC82]"
           onclick={copyJSON}
         >
-          {copied ? '✓' : 'Copy JSON'}
+          {copied ? '✓' : t('action_copy_json')}
         </button>
       </div>
     </div>
@@ -434,7 +435,7 @@
             <!-- svelte-ignore a11y_autofocus -->
             <input
               type="text"
-              placeholder="Search keys and values…"
+              placeholder={t('search_placeholder')}
               class="flex-1 bg-transparent text-[11px] text-zinc-300 outline-none placeholder:text-zinc-700"
               bind:value={searchQuery}
               autofocus
@@ -468,7 +469,7 @@
       {#if activeTab === 'explorer'}
         {#if showSearch && searchQuery.trim()}
           {#if searchResults.length === 0}
-            <p class="py-8 text-center text-xs text-zinc-600">No results for "{searchQuery}"</p>
+            <p class="py-8 text-center text-xs text-zinc-600">{t('search_no_results', searchQuery)}</p>
           {:else}
             <div class="flex flex-col gap-1">
               {#each searchResults as result}
@@ -483,7 +484,7 @@
                   <button
                     class="mt-0.5 shrink-0 text-[10px] text-zinc-700 opacity-0 transition-opacity hover:text-zinc-400 group-hover:opacity-100"
                     onclick={() => navigator.clipboard.writeText(result.path)}
-                  >copy path</button>
+                  >{t('action_copy_path')}</button>
                 </div>
               {/each}
             </div>
@@ -503,24 +504,24 @@
 
       {:else if activeTab === 'stores'}
         {#if storeEntries.length === 0}
-          <p class="py-8 text-center text-xs text-zinc-600">No Pinia stores detected</p>
+          <p class="py-8 text-center text-xs text-zinc-600">{t('stores_empty')}</p>
         {:else}
           <div class="mb-3 flex items-center gap-2">
             <p class="text-[11px] text-zinc-600">
-              {storeEntries.length} store{storeEntries.length > 1 ? 's' : ''} detected
+              {storeEntries.length === 1 ? t('stores_detected_one') : t('stores_detected_other', String(storeEntries.length))}
             </p>
             <div class="ml-auto flex gap-1">
               {#if storeSnapshot}
                 <button
                   class="rounded px-2 py-1 text-[10px] text-zinc-600 transition-colors hover:text-zinc-400"
                   onclick={clearSnapshot}
-                >Clear</button>
+                >{t('action_clear')}</button>
               {/if}
               <button
                 class="rounded border border-zinc-800 px-2 py-1 text-[10px] text-zinc-400 transition-colors hover:border-[#00DC82]/30 hover:text-[#00DC82]"
                 onclick={saveSnapshot}
               >
-                {snapshotSaved ? '✓ Saved' : 'Save snapshot'}
+                {snapshotSaved ? t('action_saved') : t('action_save_snapshot')}
               </button>
             </div>
           </div>
@@ -533,11 +534,11 @@
                   <span class="rounded bg-[#00DC82]/10 px-1.5 py-0.5 text-[10px] text-[#00DC82]">{storeId}</span>
                   {#if storeSnapshot}
                     {#if storeStatuses[i] === 'changed'}
-                      <span class="ml-auto rounded bg-yellow-500/15 px-1.5 py-0.5 text-[10px] text-yellow-400">changed</span>
+                      <span class="ml-auto rounded bg-yellow-500/15 px-1.5 py-0.5 text-[10px] text-yellow-400">{t('store_status_changed')}</span>
                     {:else if storeStatuses[i] === 'new'}
-                      <span class="ml-auto rounded bg-[#00DC82]/15 px-1.5 py-0.5 text-[10px] text-[#00DC82]">new</span>
+                      <span class="ml-auto rounded bg-[#00DC82]/15 px-1.5 py-0.5 text-[10px] text-[#00DC82]">{t('store_status_new')}</span>
                     {:else}
-                      <span class="ml-auto rounded bg-zinc-800/60 px-1.5 py-0.5 text-[10px] text-zinc-600">unchanged</span>
+                      <span class="ml-auto rounded bg-zinc-800/60 px-1.5 py-0.5 text-[10px] text-zinc-600">{t('store_status_unchanged')}</span>
                     {/if}
                   {/if}
                 </div>
@@ -548,7 +549,7 @@
                 {#if diffsByStore[i]?.length}
                   <div class="border-t border-zinc-800/60 px-3 py-2">
                     <p class="mb-1.5 text-[10px] font-medium uppercase tracking-wider text-zinc-600">
-                      {diffsByStore[i]!.length} change{diffsByStore[i]!.length > 1 ? 's' : ''}
+                      {diffsByStore[i]!.length === 1 ? t('store_changes_one') : t('store_changes_other', String(diffsByStore[i]!.length))}
                     </p>
                     <div class="flex flex-col gap-1">
                       {#each diffsByStore[i]! as d}
@@ -578,9 +579,9 @@
       {:else if activeTab === 'tags'}
         <div class="mb-3 flex items-center gap-2">
           <p class="text-[11px] text-zinc-600">
-            {visibleTags.length} tag{visibleTags.length > 1 ? 's' : ''}
+            {visibleTags.length === 1 ? t('tags_count_one') : t('tags_count_other', String(visibleTags.length))}
             {#if !showInternalTags && tags.length !== visibleTags.length}
-              <span class="text-zinc-700">({tags.length - visibleTags.length} internes masqués)</span>
+              <span class="text-zinc-700">{t('tags_hidden', String(tags.length - visibleTags.length))}</span>
             {/if}
           </p>
           <button
@@ -588,12 +589,12 @@
               {showInternalTags ? 'border-[#00DC82]/30 text-[#00DC82]' : 'text-zinc-500 hover:text-zinc-300'}"
             onclick={() => (showInternalTags = !showInternalTags)}
           >
-            {showInternalTags ? 'Masquer internes' : 'Voir internes'}
+            {showInternalTags ? t('tags_hide_internal') : t('tags_show_internal')}
           </button>
         </div>
 
         {#if visibleTags.length === 0}
-          <p class="py-8 text-center text-xs text-zinc-600">Aucun tag détecté</p>
+          <p class="py-8 text-center text-xs text-zinc-600">{t('tags_empty')}</p>
         {:else}
           <div class="flex flex-col gap-2">
             {#each visibleTags as tag}
@@ -614,14 +615,14 @@
                   <span class="flex-1 font-mono text-[11px] font-medium {isInternal ? 'text-zinc-600' : 'text-zinc-200'}">{tag}</span>
                   <span class="shrink-0 rounded bg-zinc-800 px-1.5 py-0.5 text-[10px] text-zinc-500">{items.length}</span>
                   {#if isInternal}
-                    <span class="shrink-0 text-[9px] text-zinc-700 uppercase tracking-wider">interne</span>
+                    <span class="shrink-0 text-[9px] text-zinc-700 uppercase tracking-wider">{t('tag_internal_label')}</span>
                   {/if}
                 </button>
 
                 {#if isOpen}
                   <div class="border-t border-zinc-800/60 p-3">
                     {#if items.length === 0}
-                      <p class="text-[11px] text-zinc-600">Aucune valeur résolue</p>
+                      <p class="text-[11px] text-zinc-600">{t('tag_no_values')}</p>
                     {:else if items.length === 1}
                       <TreeNode value={items[0]} depth={0} startCollapsed={false} pathArr={[tag]} />
                     {:else}
@@ -643,7 +644,7 @@
 
       {:else if activeTab === 'endpoints'}
         {#if Object.keys(endpointsByKind).length === 0}
-          <p class="py-8 text-center text-xs text-zinc-600">No URLs found</p>
+          <p class="py-8 text-center text-xs text-zinc-600">{t('endpoints_empty')}</p>
         {:else}
           <div class="flex flex-col gap-4">
             {#each KIND_ORDER as kind}
@@ -662,7 +663,7 @@
                             class="rounded px-2 py-0.5 text-[10px] transition-colors hover:bg-zinc-800
                               {copiedKey === `url:${ep.url}` ? 'text-[#00DC82]' : 'text-zinc-600 hover:text-zinc-300'}"
                             onclick={() => copyEndpoint(`url:${ep.url}`, ep.url)}
-                          >{copiedKey === `url:${ep.url}` ? '✓' : 'copy'}</button>
+                          >{copiedKey === `url:${ep.url}` ? '✓' : t('action_copy')}</button>
                           <button
                             class="rounded px-2 py-0.5 text-[10px] transition-colors hover:bg-zinc-800
                               {copiedKey === `curl:${ep.url}` ? 'text-[#00DC82]' : 'text-zinc-600 hover:text-zinc-300'}"
@@ -689,7 +690,7 @@
           <button
             class="shrink-0 text-[10px] text-zinc-600 transition-colors hover:text-zinc-400"
             onclick={() => navigator.clipboard.writeText(selectedPath)}
-          >copy</button>
+          >{t('action_copy')}</button>
           <button
             class="shrink-0 text-[10px] text-zinc-700 hover:text-zinc-500"
             onclick={() => (selectedPath = '')}

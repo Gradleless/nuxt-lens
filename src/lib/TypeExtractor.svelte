@@ -1,6 +1,7 @@
 <script lang="ts">
   import { quicktype, InputData, jsonInputForTargetLanguage } from 'quicktype-core'
   import CodeBlock from './CodeBlock.svelte'
+  import { t } from './i18n'
 
   let { resolved, tags }: { resolved: unknown[]; tags: string[] } = $props()
 
@@ -106,13 +107,13 @@
           ? 'bg-zinc-800 text-zinc-200'
           : 'text-zinc-500 hover:text-zinc-300'}"
         onclick={() => (justTypes = true)}
-      >Types only</button>
+      >{t('typeextractor_types_only')}</button>
       <button
         class="px-2.5 py-1 transition-colors {!justTypes
           ? 'bg-zinc-800 text-zinc-200'
           : 'text-zinc-500 hover:text-zinc-300'}"
         onclick={() => (justTypes = false)}
-      >Full client</button>
+      >{t('typeextractor_full_client')}</button>
     </div>
 
     <button
@@ -120,14 +121,14 @@
       onclick={copy}
       disabled={generating}
     >
-      {copied ? '✓ copied' : 'Copy'}
+      {copied ? t('action_copied') : t('action_copy_code')}
     </button>
   </div>
 
   {#if generating}
     <div class="flex h-24 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-900/50">
       <div class="h-4 w-4 animate-spin rounded-full border-2 border-zinc-700 border-t-[#00DC82]"></div>
-      <span class="text-[11px] text-zinc-600">Generating…</span>
+      <span class="text-[11px] text-zinc-600">{t('export_generating')}</span>
     </div>
   {:else}
     <CodeBlock code={generated} lang={HLJS_LANG[lang]} maxHeight="320px" />
@@ -136,7 +137,7 @@
   {#if tags.length > 0}
     <div>
       <p class="mb-1.5 text-[10px] font-medium uppercase tracking-wider text-zinc-600">
-        Custom types in payload ({tags.length})
+        {t('typeextractor_custom_types', String(tags.length))}
       </p>
       <div class="flex flex-wrap gap-1">
         {#each tags as tag}

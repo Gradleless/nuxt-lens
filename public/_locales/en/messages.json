@@ -1,0 +1,71 @@
+{
+  "extensionName": { "message": "NuxtLens" },
+  "extensionDescription": { "message": "Inspect and explore Nuxt 3 page data: state, stores, tags, endpoints and more." },
+
+  "status_detected": { "message": "detected" },
+  "status_not_detected": { "message": "not detected" },
+  "no_data_found": { "message": "No __NUXT_DATA__ found on this page" },
+
+  "action_copy_json": { "message": "Copy JSON" },
+  "action_copy_path": { "message": "copy path" },
+  "action_copy": { "message": "copy" },
+  "action_clear": { "message": "Clear" },
+  "action_save_snapshot": { "message": "Save snapshot" },
+  "action_saved": { "message": "✓ Saved" },
+  "action_copied": { "message": "✓ copied" },
+  "action_copy_code": { "message": "Copy" },
+
+  "search_placeholder": { "message": "Search keys and values…" },
+  "search_no_results": { "message": "No results for \"$1\"" },
+
+  "tab_explorer": { "message": "Explorer" },
+  "tab_export": { "message": "Export" },
+  "tab_stores": { "message": "Stores" },
+  "tab_tags": { "message": "Tags" },
+  "tab_endpoints": { "message": "Endpoints" },
+
+  "stores_empty": { "message": "No Pinia stores detected" },
+  "stores_detected_one": { "message": "1 store detected" },
+  "stores_detected_other": { "message": "$1 stores detected" },
+  "store_label": { "message": "Store #$1" },
+  "store_status_changed": { "message": "changed" },
+  "store_status_new": { "message": "new" },
+  "store_status_unchanged": { "message": "unchanged" },
+  "store_changes_one": { "message": "1 change" },
+  "store_changes_other": { "message": "$1 changes" },
+
+  "tags_empty": { "message": "No tags detected" },
+  "tags_hidden": { "message": "($1 internal hidden)" },
+  "tags_hide_internal": { "message": "Hide internal" },
+  "tags_show_internal": { "message": "Show internal" },
+  "tags_count_one": { "message": "1 tag" },
+  "tags_count_other": { "message": "$1 tags" },
+  "tag_internal_label": { "message": "internal" },
+  "tag_no_values": { "message": "No resolved values" },
+
+  "endpoints_empty": { "message": "No URLs found" },
+  "kind_api": { "message": "API Routes" },
+  "kind_image": { "message": "Images" },
+  "kind_document": { "message": "Documents" },
+  "kind_external": { "message": "External URLs" },
+  "kind_page": { "message": "Page Routes" },
+  "kind_other": { "message": "Other" },
+
+  "export_mode_script": { "message": "Script TS" },
+  "export_mode_types": { "message": "Types" },
+  "export_mode_json": { "message": "JSON" },
+  "export_types_count_one": { "message": "1 type:" },
+  "export_types_count_other": { "message": "$1 types:" },
+  "export_show_internal": { "message": "+internal" },
+  "export_types_note": { "message": "nuxt-data-parser is Node.js only — use these types with your own fetch logic." },
+  "export_generating": { "message": "Generating…" },
+
+  "typeextractor_types_only": { "message": "Types only" },
+  "typeextractor_full_client": { "message": "Full client" },
+  "typeextractor_custom_types": { "message": "Custom types in payload ($1)" },
+
+  "tableview_empty": { "message": "No array of objects found in the payload" },
+  "tableview_rows": { "message": "$1 rows" },
+  "tableview_cols": { "message": "$1 cols" },
+  "tableview_copy_csv": { "message": "Copy CSV" }
+}

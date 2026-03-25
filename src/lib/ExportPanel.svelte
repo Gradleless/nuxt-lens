@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { quicktype, InputData, jsonInputForTargetLanguage } from 'quicktype-core'
-  import CodeBlock from './CodeBlock.svelte'
+  import { InputData, jsonInputForTargetLanguage, quicktype } from 'quicktype-core';
+  import CodeBlock from './CodeBlock.svelte';
+  import { t } from './i18n';
 
   let {
     resolved,
@@ -102,11 +103,11 @@
       generated =
         `import { extractFromUrl } from 'nuxt-data-parser'\n` +
         `\n` +
-        `// ─── Types ───────────────────────────────────────────────────────────────────\n` +
+        `// Types \n` +
         `\n` +
         `${types}\n` +
         `\n` +
-        `// ─── Main ────────────────────────────────────────────────────────────────────\n` +
+        `// Main \n` +
         `\n` +
         `async function main() {\n` +
         `  const ext = await extractFromUrl('${pageUrl}')\n` +
@@ -166,7 +167,7 @@
 
 <div class="flex flex-col gap-3">
   <div class="flex items-center gap-1">
-    {#each ([['script', 'Script TS'], ['types', 'Types'], ['json', 'JSON']] as [Mode, string][]) as [m, label]}
+    {#each ([[`script`, t('export_mode_script')], [`types`, t('export_mode_types')], [`json`, t('export_mode_json')]] as [Mode, string][]) as [m, label]}
       <button
         class="rounded px-2.5 py-1 text-[11px] font-medium transition-colors
           {mode === m ? 'bg-[#00DC82]/15 text-[#00DC82]' : 'text-zinc-500 hover:text-zinc-300'}"
@@ -178,7 +179,7 @@
       class="ml-auto rounded px-2.5 py-1 text-[11px] text-zinc-500 transition-colors hover:text-[#00DC82]"
       onclick={copy}
       disabled={generating}
-    >{copied ? '✓ copied' : 'Copy'}</button>
+    >{copied ? t('action_copied') : t('action_copy_code')}</button>
   </div>
 
   {#if mode === 'types'}
@@ -204,7 +205,7 @@
         </p>
         {#if activeTags.length > 0}
           <p class="mt-0.5 text-[10px] text-zinc-600">
-            {activeTags.length} type{activeTags.length > 1 ? 's' : ''} :
+            {activeTags.length === 1 ? t('export_types_count_one') : t('export_types_count_other', String(activeTags.length))}
             <span class="font-mono text-zinc-500">{activeTags.slice(0, 4).join(', ')}{activeTags.length > 4 ? '…' : ''}</span>
           </p>
         {/if}
@@ -214,21 +215,21 @@
           class="shrink-0 rounded border border-zinc-700 px-2 py-1 text-[10px] transition-colors
             {showInternalTags ? 'border-[#00DC82]/30 text-[#00DC82]' : 'text-zinc-500 hover:text-zinc-300'}"
           onclick={() => (showInternalTags = !showInternalTags)}
-        >+internes</button>
+        >{t('export_show_internal')}</button>
       {/if}
     </div>
   {/if}
 
   {#if mode === 'types' && typesLang !== 'typescript'}
     <p class="text-[10px] text-zinc-700">
-      nuxt-data-parser est Node.js only — utilise ces types avec ta propre logique de fetch.
+      {t('export_types_note')}
     </p>
   {/if}
 
   {#if generating}
     <div class="flex h-28 items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-900/50">
       <div class="h-4 w-4 animate-spin rounded-full border-2 border-zinc-700 border-t-[#00DC82]"></div>
-      <span class="text-[11px] text-zinc-600">Génération…</span>
+      <span class="text-[11px] text-zinc-600">{t('export_generating')}</span>
     </div>
   {:else}
     <CodeBlock code={generated} lang={hljsLang} maxHeight="370px" />
