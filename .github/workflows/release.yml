@@ -29,10 +29,14 @@ jobs:
       - name: Build & zip Firefox
         run: npm run zip:firefox
 
+      - name: Rename Firefox zip to XPI
+        run: mv .output/nuxtlens-*-firefox.zip .output/nuxtlens-firefox.xpi
+
       - name: Upload release assets
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release upload ${{ github.event.release.tag_name }} \
-            .output/*.zip \
+            .output/nuxtlens-*-chrome.zip \
+            .output/nuxtlens-firefox.xpi \
             --clobber
