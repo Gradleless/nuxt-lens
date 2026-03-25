@@ -7,7 +7,7 @@ export default defineConfig({
   vite: () => ({
     plugins: [tailwindcss()],
   }),
-  manifest: {
+  manifest: ({ browser }) => ({
     name: '__MSG_extensionName__',
     description: '__MSG_extensionDescription__',
     default_locale: 'en',
@@ -18,7 +18,10 @@ export default defineConfig({
         strict_min_version: '109.0',
       },
     },
-  },
+    ...(browser === 'firefox' ? {
+      data_collection_permissions: { required: [], optional: [] },
+    } : {}),
+  }),
   webExt: {
     chromiumArgs: ['--user-data-dir=./.chrome-profile'],
   },
