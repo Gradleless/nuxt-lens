@@ -11,7 +11,7 @@ export default defineConfig({
     name: '__MSG_extensionName__',
     description: '__MSG_extensionDescription__',
     default_locale: 'en',
-    permissions: ['activeTab', 'tabs', 'storage', 'scripting'],
+    permissions: ['activeTab', 'tabs', 'storage'],
     browser_specific_settings: {
       gecko: {
         id: 'nuxtlens@gradleless',
